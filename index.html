@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SimpleItemPrice — LukeTV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:  #ff5500;
+      --red:     #cc1100;
+      --grad:    linear-gradient(135deg, #ff6a00, #cc1100);
+      --dark:    #0d0005;
+      --card-bg: #150008;
+      --border:  rgba(255,85,0,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(13,0,5,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.6rem; font-weight: 900;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px; text-decoration: none;
+    }
+    nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
+    nav ul a {
+      color: #ccc; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--orange); }
+    .nav-donate {
+      padding: 8px 16px; border-radius: 6px;
+      background: var(--grad); color: #fff !important;
+      font-size: 0.82rem !important; font-weight: 700 !important;
+      transition: opacity .2s !important;
+    }
+    .nav-donate:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .plugin-hero {
+      padding: 160px 6% 80px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .plugin-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(204,17,0,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block; margin-bottom: 24px;
+      padding: 6px 18px; border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      background: rgba(255,85,0,0.08); color: var(--orange);
+    }
+    .plugin-hero h1 {
+      font-size: clamp(3rem, 9vw, 6rem);
+      font-weight: 900; line-height: 1;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .plugin-hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #bbb; max-width: 580px; line-height: 1.7; margin: 0 auto 40px;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 8px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer; border: none; font-family: 'Poppins', sans-serif;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(255,85,0,0.35); }
+    .btn-primary { background: var(--grad); color: #fff; }
+    .btn-outline {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255,85,0,0.5);
+    }
+    .btn-outline:hover { border-color: var(--orange); }
+
+    /* ── VERSION BADGE ── */
+    .version-row {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .badge {
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(255,85,0,0.12); border: 1px solid var(--border);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--orange);
+    }
+    .badge-neutral {
+      background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #888;
+    }
+
+    /* ── SECTIONS ── */
+    .content { flex: 1; padding: 0 6% 100px; max-width: 900px; margin: 0 auto; width: 100%; }
+
+    .section { margin-bottom: 64px; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 20px;
+    }
+
+    /* ── FEATURE CARDS ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .feature-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .feature-card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.88rem; color: #777; line-height: 1.65; }
+
+    /* ── COMMANDS ── */
+    .commands-list { display: flex; flex-direction: column; gap: 12px; }
+    .command-row {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 22px;
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .command-code {
+      background: rgba(255,85,0,0.1); border: 1px solid rgba(255,85,0,0.2);
+      border-radius: 6px; padding: 4px 12px;
+      font-family: monospace; font-size: 0.9rem; color: #ff8844;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .command-desc { color: #888; font-size: 0.88rem; flex: 1; }
+
+    /* ── COMPATIBILITY TAGS ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag {
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.78rem; color: #777; font-weight: 600;
+    }
+
+    /* ── INSTALL BOX ── */
+    .install-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px;
+      text-align: center;
+    }
+    .install-box h2 {
+      font-size: 1.6rem; font-weight: 900; margin-bottom: 12px;
+    }
+    .install-box h2 span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .install-box p { color: #888; font-size: 0.92rem; line-height: 1.7; max-width: 480px; margin: 0 auto 28px; }
+
+    .steps { display: flex; flex-direction: column; gap: 14px; text-align: left; margin-bottom: 32px; }
+    .step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(255,255,255,0.03); border-radius: 10px; padding: 14px 18px;
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 900;
+    }
+    .step-text { font-size: 0.9rem; color: #bbb; line-height: 1.6; }
+    .step-text strong { color: #fff; }
+
+    /* ── STATUS ── */
+    .status-row {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: #666;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 6%; text-align: center;
+      color: #555; font-size: 0.85rem;
+    }
+    footer .footer-logo {
+      font-size: 2rem; font-weight: 900;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    footer .socials { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+    footer .socials a {
+      color: #666; text-decoration: none; font-weight: 600;
+      font-size: 0.85rem; transition: color .2s;
+    }
+    footer .socials a:hover { color: var(--orange); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .command-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://luketv.net" class="nav-logo">LukeTV</a>
+    <ul>
+      <li><a href="https://luketv.net/#platforms">Content</a></li>
+      <li><a href="https://luketv.net/#smp">LukeSMP</a></li>
+      <li><a href="https://luketv.net/plugins.html">Plugins</a></li>
+      <li><a href="https://discord.gg/K8EqANr9wn" target="_blank">Discord</a></li>
+      <li><a href="https://streamlabs.com/luke19tv1/tip" target="_blank" class="nav-donate">Donate</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="plugin-hero">
+    <div class="hero-badge">Minecraft Plugin</div>
+    <h1>SimpleItemPrice</h1>
+    <p>
+      Real-time economy pricing for Minecraft. Shows live sell prices directly
+      on items — everywhere, instantly, with no delay.
+    </p>
+    <div class="version-row">
+      <span class="badge">v1.0.0</span>
+      <span class="badge badge-neutral">Paper 1.21.11</span>
+      <span class="badge badge-neutral">EconomyShopGUI</span>
+      <span class="badge badge-neutral">Bedrock Compatible</span>
+    </div>
+    <div class="hero-buttons">
+      <a href="https://github.com/Luke19TV/SimpleItemPrice/releases/latest" class="btn btn-primary">
+        ↓ Download Latest
+      </a>
+      <a href="https://github.com/Luke19TV/SimpleItemPrice" target="_blank" class="btn btn-outline">
+        GitHub Repo →
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- STATUS -->
+    <div style="text-align:center; margin-bottom: 64px;">
+      <div class="status-row">
+        <div class="status-dot"></div>
+        Active — running live on LukeSMP
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section">
+      <p class="section-label">Core Features</p>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-card-icon">💰</div>
+          <h3>Live Price Display</h3>
+          <p>Shows item sell value directly on items. Updates instantly when items move, split, stack, or transfer.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">📦</div>
+          <h3>Full Inventory Support</h3>
+          <p>Works in player inventories, chests and containers, and EconomyShopGUI shops.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">🧹</div>
+          <h3>Smart GUI Filtering</h3>
+          <p>Auto-hides prices on decorative GUI items like glass panes and nav buttons to keep menus clean.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">🔗</div>
+          <h3>Seamless Stacking</h3>
+          <p>Items stack correctly regardless of price display. Old and new items normalized to prevent separation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">📱</div>
+          <h3>Bedrock Compatible</h3>
+          <p>Full Geyser/Floodgate support. Fixes drag splitting, double-tap stacking, and floating item bugs on mobile.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">⚡</div>
+          <h3>No Flicker / No Delay</h3>
+          <p>Instant updates with zero visual glitches or inventory flickering.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COMMANDS -->
+    <div class="section">
+      <p class="section-label">Player Commands</p>
+      <div class="commands-list">
+        <div class="command-row">
+          <span class="command-code">/sip on</span>
+          <span class="command-desc">Enable price display for yourself</span>
+        </div>
+        <div class="command-row">
+          <span class="command-code">/sip off</span>
+          <span class="command-desc">Disable price display for yourself</span>
+        </div>
+        <div class="command-row">
+          <span class="command-code">/sip toggle</span>
+          <span class="command-desc">Toggle price display on or off instantly</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPATIBILITY -->
+    <div class="section">
+      <p class="section-label">Compatibility</p>
+      <div class="tags">
+        <span class="tag">EconomyShopGUI Premium</span>
+        <span class="tag">ProtocolLib</span>
+        <span class="tag">Geyser + Floodgate</span>
+        <span class="tag">CommandPanels</span>
+        <span class="tag">DeluxeMenus</span>
+        <span class="tag">Paper 1.21.11</span>
+      </div>
+    </div>
+
+    <!-- INSTALL -->
+    <div class="section">
+      <div class="install-box">
+        <h2>How to <span>Install</span></h2>
+        <p>Getting SimpleItemPrice running on your server takes under a minute.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Download</strong> the latest <code style="font-family:monospace;color:#ff8844;">.jar</code> from the releases page above.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Drop the file</strong> into your server's <code style="font-family:monospace;color:#ff8844;">/plugins</code> folder.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Restart your server.</strong> The plugin will generate its config automatically on first run.</div>
+          </div>
+        </div>
+        <a href="https://github.com/Luke19TV/SimpleItemPrice/releases/latest" class="btn btn-primary">
+          ↓ Download Latest Release
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">LukeTV</div>
+    <div class="socials">
+      <a href="https://luketv.net" >Website</a>
+      <a href="https://www.youtube.com/@Luke19TV/videos" target="_blank">YouTube</a>
+      <a href="https://www.tiktok.com/@lukeplaystv"      target="_blank">TikTok</a>
+      <a href="https://discord.gg/K8EqANr9wn"            target="_blank">Discord</a>
+      <a href="https://github.com/Luke19TV/SimpleItemPrice" target="_blank">GitHub</a>
+    </div>
+    <p>© 2026 LukeTV. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
