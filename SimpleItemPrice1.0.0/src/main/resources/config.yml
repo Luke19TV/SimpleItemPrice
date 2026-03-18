@@ -1,0 +1,97 @@
+# Item-PriceTag Configuration
+
+# Economy Integration
+# Choose your preferred economy plugin
+# Options: ShopGUIPlus, EconomyShopGUI
+economy:
+  integration: EconomyShopGUI
+
+# Price Format
+# Use Java DecimalFormat patterns
+# Examples:
+#   "#,##0.00" -> 1,234.56
+#   "0.00" -> 1234.56
+#   "#,##0" -> 1,235
+# Price Format
+# Use 'default' for DecimalFormat patterns like "#,##0.00"
+# Use 'abbreviated' for formats like 1k, 1M, etc.
+
+price-format-type: default
+price-format: '#,##0.00'
+
+# Item Lore Format
+# Use placeholders: {price}, {price_total}, {item_count}
+# Color codes: <color>text</color> (e.g., <red>, <blue>, <yellow>)
+# Formatting: <bold>, <italic>, <underline>, <strikethrough>
+item-lore:
+- '<yellow>Price: <white>{price}'
+- '<gray>Total: <yellow>{price_total}'
+- '<gray>Quantity: <white>{item_count}'
+
+# Advanced Options
+options:
+  # Enable debug mode for additional console output
+  debug: false
+  
+  # Minimum price to display (items below this price won't show a price tag)
+  min-price: 0.01
+  
+  # Custom lore prefix for identifying price lore lines
+  # Leave empty to use default invisible characters (\u200C\u200C\u200C)
+  # This prefix is used to identify and remove price lore lines when updating
+  # You can set a custom prefix like "§8[Price] " to make it visible for debugging
+  # or use invisible characters like "\u200C\u200C\u200C" for normal operation
+  lore-prefix: ''
+
+  # If true, only show price tags in the player's inventory (bottom) and cursor.
+  # If false, also show tags in container slots (chests, barrels, etc.).
+  # Default: false
+  player_inventory_only: false
+
+# Container Filtering
+# Control which containers show price tags based on inventory titles
+container-filtering:
+  # Enable/disable container filtering
+  enabled: false
+  
+  # Filter mode: "whitelist" (only show in listed containers) or "blacklist" (hide in listed containers)
+  mode: whitelist
+  
+  # List of inventory titles to filter
+  # Examples:
+  #   - "Inventory"                    # Exact match
+  #   - "Vault"                        # Contains "Vault"
+  #   - ".*# Vault"                    # Regex: any number followed by " Vault"
+  #   - "§6Special Shop"               # With color codes
+  #   - "Auction House"                # Multiple words
+  titles:
+  - Inventory
+  - .*# Vault
+  - Shop
+  
+  # Enable regex pattern matching for titles
+  # If true, titles will be treated as regex patterns
+  # If false, titles will use simple contains() matching
+  use-regex: false
+  
+  # Strip color codes before matching titles
+  # If true, "§6Shop" will match "Shop"
+  # If false, exact color codes must match
+  strip-colors: true
+  
+  # Only process default Minecraft containers (chests, shulker boxes, etc.)
+  # If true, custom GUIs without owners will be ignored
+  # If false, all containers will be processed
+  only-default-containers: false
+
+# Blacklist
+# Items in this list will not display price tags
+blacklist:
+- BEDROCK
+- COMMAND_BLOCK
+
+# Bedrock (Geyser/Floodgate)
+# ProtocolLib inventory packet rewriting can desync/kick Bedrock clients.
+# When enabled, Floodgate players will NOT receive client-side price lore.
+bedrock:
+  disableProtocolLib: true

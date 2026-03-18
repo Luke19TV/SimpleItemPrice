@@ -1,0 +1,19 @@
+name: SimpleItemPrice
+version: 1.1.0
+main: net.lukesmp.simpleitemprice.SimpleItemPricePlugin
+api-version: '1.21'
+author: Luke19x
+depend: [ProtocolLib]
+softdepend: [EconomyShopGUI, EconomyShopGUI-Premium, floodgate, Geyser-Spigot]
+commands:
+  siptest:
+    description: Debug info for SimpleItemPrice.
+    usage: /siptest
+    permission: simpleitemprice.debug
+  sipscan:
+    description: Scans your inventory and prints sell prices for a few items.
+    usage: /sipscan
+    permission: simpleitemprice.debug
+permissions:
+  simpleitemprice.debug:
+    default: op

@@ -67,7 +67,7 @@ Full Geyser/Floodgate support. Fixes mobile-specific bugs including:
 |---|---|
 | Paper 1.21.11 | ✅ Required |
 | ProtocolLib | ✅ Required |
-| EconomyShopGUI Premium | ✅ Required |
+| EconomyShopGUI (Free & Premium) | ✅ Required |
 | Geyser + Floodgate | Optional |
 | CommandPanels | Optional |
 | DeluxeMenus | Optional |
