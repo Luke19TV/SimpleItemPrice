@@ -1,6 +1,6 @@
 # SimpleItemPrice
 
-> Real-time item sell price display for Paper 1.21.11, fully integrated with EconomyShopGUI. Live updates, Bedrock support, and smart GUI filtering.
+> Real-time item sell price display for Paper 1.21.11, fully integrated with EconomyShopGUI. Live updates, and smart GUI filtering.
 
 **Built by [LukeTV](https://luketv.net) — running live on LukeSMP**
 
@@ -34,12 +34,6 @@ Keeps your menus clean and professional.
 ### 🔗 Seamless Stacking
 - Items stack correctly regardless of price display
 - Old and new items are normalized to prevent separation issues
-
-### 📱 Bedrock Compatible
-Full Geyser/Floodgate support. Fixes mobile-specific bugs including:
-- Drag splitting
-- Double-tap stacking
-- Floating item bugs
 
 ### ⚡ No Flicker / No Delay
 - Instant updates with zero visual glitches
